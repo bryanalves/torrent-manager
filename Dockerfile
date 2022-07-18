@@ -15,4 +15,4 @@ COPY . /app
 
 ENV FLASK_APP=torrent-manager.app 
 
-ENTRYPOINT ["flask", "run"]
+ENTRYPOINT ["flask", "run", "--host=0.0.0.0"]

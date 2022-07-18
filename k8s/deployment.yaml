@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: torrent-manager
+  labels:
+    app: tilt-torrent-manager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tilt-torrent-manager
+  template:
+    metadata:
+      labels:
+        app: tilt-torrent-manager
+    spec:
+      containers:
+        - name: tilt-torrent-manager
+          image: registry.my.bumbum.dance/torrent-manager
+          env:
+            - name: FLOOD_USER
+              valueFrom:
+                secretKeyRef:
+                  name: torrent-manager-flood-auth
+                  key: FLOOD_USER
+                  optional: false
+            - name: FLOOD_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: torrent-manager-flood-auth
+                  key: FLOOD_PASS
+                  optional: false
+            - name: TORRENT_ROOT
+              valueFrom:
+                configMapKeyRef:
+                  name: torrent-manager-config
+                  key: TORRENT_ROOT
+            - name: TORRENT_DIR
+              valueFrom:
+                configMapKeyRef:
+                  name: torrent-manager-config
+                  key: TORRENT_DIR
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+            - mountPath: /srv
+              name: media
+              readOnly: true
+      volumes:
+        - name: media
+          persistentVolumeClaim:
+            claimName: media

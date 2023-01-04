@@ -9,7 +9,6 @@ from .config import TORRENT_ROOT, TORRENT_DIR, FLOOD_ROOT, FLOOD_USER, FLOOD_PAS
 
 app = Flask(__name__)
 flood = FloodAPI(FLOOD_ROOT)
-jwt = flood.login(FLOOD_USER, FLOOD_PASS)
 
 @app.template_filter()
 def colorformat(val):
@@ -18,6 +17,7 @@ def colorformat(val):
 
 @app.route('/')
 def index():
+  app.config['jwt'] = flood.login(FLOOD_USER, FLOOD_PASS)
   torrents = torrent.list(TORRENT_ROOT)
   torrents.sort(key=lambda x: x.name.lower())
 
@@ -36,5 +36,6 @@ def index():
 @app.route('/delete_torrent', methods = ['POST'])
 def delete_torrent():
   hash = request.form['hash']
+  jwt = app.config['jwt']
   flood.delete(hash, jwt)
   return ''

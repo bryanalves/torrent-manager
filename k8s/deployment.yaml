@@ -43,7 +43,7 @@ spec:
           ports:
             - containerPort: 5000
           volumeMounts:
-            - mountPath: /srv
+            - mountPath: /data
               name: media
               readOnly: true
       volumes:

@@ -18,7 +18,7 @@ def colorformat(val):
 @app.route('/')
 def index():
   app.config['jwt'] = flood.login(FLOOD_USER, FLOOD_PASS)
-  torrents = torrent.list(TORRENT_ROOT)
+  torrents = [t for t in torrent.list(TORRENT_ROOT) if t.complete]
   torrents.sort(key=lambda x: x.name.lower())
 
   linked = partial(criteria.linked, torrent_dir=TORRENT_DIR)

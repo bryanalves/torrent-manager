@@ -1,4 +1,4 @@
-from flask import Flask, redirect, make_response, request, render_template
+from flask import Flask, redirect, request, render_template
 
 from functools import partial
 
@@ -12,7 +12,7 @@ flood = FloodAPI(FLOOD_ROOT)
 
 @app.template_filter()
 def colorformat(val):
-  color = 'text-success' if val[1] == True else 'text-danger'
+  color = 'text-success' if val[1] else 'text-danger'
   return "<span class='%s'>%s</span>" % (color, val[0])
 
 @app.route('/')
@@ -25,7 +25,7 @@ def index():
 
   data = []
   for t in torrents:
-    if linked(t)[1] == False:
+    if not linked(t)[1]:
       continue
 
     results = [criteria.age(t), criteria.ratio(t)]

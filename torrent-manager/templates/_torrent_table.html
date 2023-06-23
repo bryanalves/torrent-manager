@@ -1,0 +1,15 @@
+<table class="table table-striped table-bordered caption-top">
+  <thead class="table-light">
+    <tr>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Ratio</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody hx-target="closest tr" hx-swap="outerHTML swap:1s">
+    {% for row in data %}
+    {% include "_torrent_row.html" %}
+    {% endfor %}
+  </tbody>
+</table>

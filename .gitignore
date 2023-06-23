@@ -1,4 +1,7 @@
 __pycache__
 venv
+.venv
+*.picklecache
+*.egg-info/
 k8s/config.env
 k8s/secret.env

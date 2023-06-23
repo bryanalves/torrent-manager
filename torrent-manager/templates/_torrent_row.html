@@ -1,0 +1,16 @@
+<tr>
+  <td>{{ row[0] }}</td>
+  <td>{{ row[2] | colorformat | safe }}</td>
+  <td>{{ row[3] | colorformat | safe }}</td>
+  <td>
+    <form>
+      <input type="hidden" name="hash" value="{{ row[1] }}" />
+      <button hx-post="/delete_torrent">
+        Delete
+      </button>
+      <button hx-post="/ignore_torrent">
+        Ignore
+      </button>
+    </form>
+  </td>
+</tr>
